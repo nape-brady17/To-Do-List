@@ -6,7 +6,7 @@ public class ToDo{
         System.out.println("\t2. See a list");
         System.out.println("\t3. Add to a list");
         System.out.println("\t4. Delete a list");
-        System.out.println("\t5. Delete an element of a list");
+        System.out.println("\t5. Delete an element of a list"); //change wording to mark as complete
         System.out.println("\nIf you wish to stop press 0");
         System.out.print("Please select an from above: ");
     }
@@ -68,7 +68,8 @@ public class ToDo{
                     case 4: //delete a list
                         System.out.println("Not completed yet");
                         break;
-                    case 5: //delete an element of a list
+                    case 5: //delete an element of a list (changing to mark as complete)
+                            //save any completed items into a completed list that  can be viewed later
                         System.out.println("Not completed yet");
                         break;
                     case 0: //stop
