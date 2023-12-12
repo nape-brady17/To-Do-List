@@ -2,19 +2,24 @@ import java.util.*;
 
 public class ToDo{
     public static void printMenu(){
-        System.out.println("\n\t1. Create a list");
+        System.out.println("\nMenu");
+        System.out.println("\t1. Create a list");
         System.out.println("\t2. See a list");
         System.out.println("\t3. Add to a list");
-        System.out.println("\t4. Delete a list");
-        System.out.println("\t5. Delete an element of a list"); //change wording to mark as complete
+        System.out.println("\t4. Delete an element of a list"); 
+        System.out.println("\t5. Mark an element of a list as complete");
+        System.out.println("\t6. See the items of the list you have completed");
         System.out.println("\nIf you wish to stop press 0");
-        System.out.print("Please select an from above: ");
+        System.out.print("Please select an item from above: ");
     }
+
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
         int selection;
-        List todoList = null;   //later make this an array list of lists so that you can have multiple to do lists
+        List todoList = null, completedList;   
         boolean cont = true;
+
+        completedList= new List("Completed", "This list contains all of the elements that have been marked as completed");
 
         System.out.println("Welcome to this To-Do List");
 
@@ -51,6 +56,7 @@ public class ToDo{
                         notes = in.nextLine();
                         System.out.print("Is this a high priority element (Y/N): ");
                         temp = in.nextLine();
+                        temp = temp.toUpperCase();
                         switch(temp){
                             case "Y":
                                 highPriority = true;
@@ -65,12 +71,25 @@ public class ToDo{
                         
                         todoList.addElement(name, notes, highPriority);
                         break;
-                    case 4: //delete a list
-                        System.out.println("Not completed yet");
+                    case 4: //delete an element of a list
+                        String delName;
+                        System.out.print("What is the name of the element you wish to delete: ");
+                        delName = in.nextLine();
+                        todoList.deleteElement(delName);
                         break;
-                    case 5: //delete an element of a list (changing to mark as complete)
+                    case 5: //mark an element of a list as complete
                             //save any completed items into a completed list that  can be viewed later
-                        System.out.println("Not completed yet");
+                        String compName;
+                        Element complete;
+
+                        System.out.print("What is the name of the element you wish to mark as completed: ");
+                        compName = in.nextLine();
+
+                        complete = todoList.completeElement(compName);
+                        completedList.addElement(complete.getName(), complete.getNotes(), complete.getHighPriority());
+                        break;
+                    case 6: //see the items from the list you have completed
+                        System.out.print(completedList.toString());
                         break;
                     case 0: //stop
                         System.out.println("Have a nice day!");
@@ -135,6 +154,29 @@ class List{
     public void addElement(String name, String notes, boolean highPriority){
         Element temp = new Element(name, notes, highPriority);
         list.add(temp);
+    }
+
+    //delete element from the list
+    public void deleteElement(String name){
+        for (Element el : list){
+            if (el.getName().toUpperCase().equals(name.toUpperCase())){
+                list.remove(el);
+                return;
+            }
+        }
+        System.out.println("No element in this list exists with that name");
+    }
+
+    //mark element as completed (delete it from the list), return the element to save it to a completed list
+    public Element completeElement(String name){
+        for (Element el : list){
+            if (el.getName().toUpperCase().equals(name.toUpperCase())){
+                list.remove(el);
+                return el;
+            }
+        }
+        System.out.println("No element in this list exists with that name");
+        return null;
     }
 }
 
