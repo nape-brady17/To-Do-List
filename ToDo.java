@@ -2,75 +2,86 @@ import java.util.*;
 
 public class ToDo{
     public static void printMenu(){
-        System.out.print("Please select an option below to begin: ");
-        System.out.println("/t1. Create a list");
-        System.out.println("/t2. See a list");
-        System.out.println("/t3. Add to a list");
-        System.out.println("/t4. Delete a list");
-        System.out.println("/t5. Delete an element of a list");
-        System.out.println("/nIf you wish to stop press 0");
+        System.out.println("\n\t1. Create a list");
+        System.out.println("\t2. See a list");
+        System.out.println("\t3. Add to a list");
+        System.out.println("\t4. Delete a list");
+        System.out.println("\t5. Delete an element of a list");
+        System.out.println("\nIf you wish to stop press 0");
+        System.out.print("Please select an from above: ");
     }
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
         int selection;
-        List todoList = new List();
+        List todoList = null;
         boolean cont = true;
 
         System.out.println("Welcome to this To-Do List");
-        printMenu();
-        selection = in.nextInt();
 
         while (cont){
-            switch(selection){
-                case 1: //create a list
-                    String name, notes;
+            try{
+                printMenu();
+                selection = in.nextInt();
+                in.nextLine();
+                System.out.println();
 
-                    System.out.print("Please enter the name of the list: ");
-                    name = in.nextLine();
-                    System.out.print("Please enter any notes about this list: ");
-                    notes = in.nextLine();
+                switch(selection){
+                    case 1: //create a list
+                        String name, notes;
 
-                    todoList = new List(name, notes);
-                    break;
-                case 2: //see a list
-                    todoList.toString();
-                    break;
-                case 3: //add to a list
-                    String temp;
-                    boolean highPriority;
+                        System.out.print("Please enter the name of the list: ");
+                        name = in.nextLine();
+                        System.out.print("Please enter any notes about this list: ");
+                        notes = in.nextLine();
 
-                    System.out.print("Enter the name of the element you wish to add: ");
-                    name = in.nextLine();
-                    System.out.print("Enter any notes about the element you wish to add: ");
-                    notes = in.nextLine();
-                    System.out.print("Is this a high priority element (Y/N): ");
-                    temp = in.nextLine();
-                    switch(temp){
-                        case "Y":
-                            highPriority = true;
-                            break;
-                        case "N":
-                            highPriority = false;
-                            break;
-                        default:
-                            System.out.println("Incorrect input format, defaulted to not being a high priority element");
-                            highPriority = false;
-                    }
-                    
-                    todoList.addElement(name, notes, highPriority);
-                    break;
-                case 4: //delete a list
-                    System.out.println("Not completed yet");
-                    break;
-                case 5: //delete an element of a list
-                    System.out.println("Not completed yet");
-                    break;
-                case 0: //stop
-                    System.out.println("Have a nice day!");
-                    cont = false;
-                    break;
-                default:    //none of the others were inputted
-                    System.out.println("Incorrect input format, please try again");
+                        todoList = new List(name, notes);
+                        break;
+                    case 2: //see a list
+                        if (todoList == null) System.out.println("Must create a list first");
+                        else System.out.print(todoList.toString());
+                        break;
+                    case 3: //add to a list
+                        String temp;
+                        boolean highPriority;
+
+                        System.out.print("Enter the name of the element you wish to add: ");
+                        name = in.nextLine();
+                        System.out.print("Enter any notes about the element you wish to add: ");
+                        notes = in.nextLine();
+                        System.out.print("Is this a high priority element (Y/N): ");
+                        temp = in.nextLine();
+                        switch(temp){
+                            case "Y":
+                                highPriority = true;
+                                break;
+                            case "N":
+                                highPriority = false;
+                                break;
+                            default:
+                                System.out.println("Incorrect input format, defaulted to not being a high priority element");
+                                highPriority = false;
+                        }
+                        
+                        todoList.addElement(name, notes, highPriority);
+                        break;
+                    case 4: //delete a list
+                        System.out.println("Not completed yet");
+                        break;
+                    case 5: //delete an element of a list
+                        System.out.println("Not completed yet");
+                        break;
+                    case 0: //stop
+                        System.out.println("Have a nice day!");
+                        cont = false;
+                        break;
+                    default:    //none of the others were inputted
+                        System.out.println("Incorrect input format, please try again");
+                }
+            }
+            catch (Exception e){
+                System.out.println("\nAn error occurred, please try again");
+                in.nextLine();
+                cont = true;
             }
         }
         in.close();
@@ -110,7 +121,13 @@ class List{
     }
 
     //toString override for the List class
-        //this needs to be implemented later
+    public String toString(){
+        String ele = "";
+        for (Element el : list){
+            ele = ele.concat(el.toString());
+        }
+        return name + ":\t(" + notes + ")\n" + ele;
+    }
 
     //add element to a list
     public void addElement(String name, String notes, boolean highPriority){
@@ -158,5 +175,11 @@ class Element{
     }
 
     //toString override for the Elements class
-        //this needs to be implemented
+    public String toString(){
+        String priority;
+        if (highPriority) priority = "!!!";
+        else priority = "";
+
+        return "\t- " + name + "\t(" + notes + ")\t" + priority + "\n";
+    }
 }
