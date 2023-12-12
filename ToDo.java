@@ -17,7 +17,8 @@ public class ToDo{
         Scanner in = new Scanner(System.in);
         int selection;
         List todoList = null, completedList;   
-        boolean cont = true;
+        boolean cont = true, highPriority;
+        String name, notes, temp;
 
         completedList= new List("Completed", "This list contains all of the elements that have been marked as completed");
 
@@ -27,13 +28,11 @@ public class ToDo{
             try{
                 printMenu();
                 selection = in.nextInt();
-                in.nextLine();
+                in.nextLine();  //clears the input buffer of the enter
                 System.out.println();
 
                 switch(selection){
                     case 1: //create a list
-                        String name, notes;
-
                         System.out.print("Please enter the name of the list: ");
                         name = in.nextLine();
                         System.out.print("Please enter any notes about this list: ");
@@ -41,19 +40,19 @@ public class ToDo{
 
                         todoList = new List(name, notes);
                         break;
+
                     case 2: //see a list
                     //Still want to better format the elements in the list
                         if (todoList == null) System.out.println("Must create a list first");
                         else System.out.print(todoList.toString());
                         break;
-                    case 3: //add to a list
-                        String temp;
-                        boolean highPriority;
 
+                    case 3: //add to a list
                         System.out.print("Enter the name of the element you wish to add: ");
                         name = in.nextLine();
                         System.out.print("Enter any notes about the element you wish to add: ");
                         notes = in.nextLine();
+
                         System.out.print("Is this a high priority element (Y/N): ");
                         temp = in.nextLine();
                         temp = temp.toUpperCase();
@@ -71,37 +70,40 @@ public class ToDo{
                         
                         todoList.addElement(name, notes, highPriority);
                         break;
+
                     case 4: //delete an element of a list
-                        String delName;
                         System.out.print("What is the name of the element you wish to delete: ");
-                        delName = in.nextLine();
-                        todoList.deleteElement(delName);
+                        name = in.nextLine();
+                        todoList.deleteElement(name);
                         break;
+
                     case 5: //mark an element of a list as complete
                             //save any completed items into a completed list that  can be viewed later
-                        String compName;
                         Element complete;
 
                         System.out.print("What is the name of the element you wish to mark as completed: ");
-                        compName = in.nextLine();
+                        name = in.nextLine();
 
-                        complete = todoList.completeElement(compName);
+                        complete = todoList.completeElement(name);
                         completedList.addElement(complete.getName(), complete.getNotes(), complete.getHighPriority());
                         break;
+
                     case 6: //see the items from the list you have completed
                         System.out.print(completedList.toString());
                         break;
+
                     case 0: //stop
                         System.out.println("Have a nice day!");
                         cont = false;
                         break;
+
                     default:    //none of the others were inputted
                         System.out.println("Incorrect input format, please try again");
                 }
             }
             catch (Exception e){
                 System.out.println("\nAn error occurred, please try again");
-                in.nextLine();
+                in.nextLine();  //clears the input buffer that holds the error
                 cont = true;
             }
         }
