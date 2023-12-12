@@ -11,7 +11,7 @@ Program Basics:
         5. Mark an element of a list as complete
         6. See the items of the list you have completed
     These allow the user to create, manage, and view their to-do list with simplicity. This program was written mainly for personal use as a way to keep track 
-    of daily items that needed to be completed. The simplicity of the to-do list allows for ease of use and is time efficient.
+    of daily tasks that needed to be completed. The simplicity of the to-do list allows for ease of use and is time efficient.
 
 Functionalities:
     1. Create a list   
@@ -38,6 +38,8 @@ Functionalities:
         This allows the user to view all of the items that they have completed. It is printed in the same format as above.
 
 ***More functionalities will be added. Some of the functionalities I hope to add are:
+    - format the viewing of the lists 
+        - format into a table like structure
     - a way to edit both the list and the elements of a list
         - change/edit the name and notes, as well as change the priority of the elements
     - a way to add multiple to-do lists
