@@ -13,7 +13,7 @@ public class ToDo{
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
         int selection;
-        List todoList = null;
+        List todoList = null;   //later make this an array list of lists so that you can have multiple to do lists
         boolean cont = true;
 
         System.out.println("Welcome to this To-Do List");
@@ -37,6 +37,7 @@ public class ToDo{
                         todoList = new List(name, notes);
                         break;
                     case 2: //see a list
+                    //Still want to better format the elements in the list
                         if (todoList == null) System.out.println("Must create a list first");
                         else System.out.print(todoList.toString());
                         break;
