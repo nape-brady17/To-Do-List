@@ -233,10 +233,11 @@ class Element{
 
     //toString override for the Elements class
     public String toString(){
-        String priority;
-        if (highPriority) priority = "!!!";
-        else priority = "";
+        String ret = "\t- ";
+        ret = ret.concat(String.format(" %-50.50s", name));
+        if (highPriority) ret = ret.concat("*****");
+        ret = ret.concat(String.format("\n\t\t- %-75.75s\t\n", notes));
 
-        return "\t- " + name + "\t(" + notes + ") " + priority + "\n";
+        return ret;
     }
 }

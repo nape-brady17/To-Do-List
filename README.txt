@@ -25,7 +25,8 @@ Functionalities:
 
     3. Add to a list  
         This allows the user to add elements to their to-do list. It will ask them for the name of the element as well as notes and weather it is a high
-        priority element. It will then add this element to the end of the to-do list.
+        priority element. It will then add this element to the end of the to-do list. The name and notes for elements can be as long as desired, but only
+        the first 30 characters of a name and 60 characters of a note will be displayed using the above (second) option.
 
     4. Delete an element of a list
         This allows the user to delete an element. If an element is deleted then it does not go to the completed list, it is simply removed from the list.
@@ -38,8 +39,6 @@ Functionalities:
         This allows the user to view all of the items that they have completed. It is printed in the same format as above.
 
 ***More functionalities will be added. Some of the functionalities I hope to add are:
-    - format the viewing of the lists 
-        - format into a table like structure
     - a way to edit both the list and the elements of a list
         - change/edit the name and notes, as well as change the priority of the elements
     - a way to add multiple to-do lists
@@ -48,3 +47,4 @@ Functionalities:
     - allow an element to have its own list
         - if an element has a sequence of elements, then the element can have its own list with the same functionalities as the bigger to-do list
     - allow of printing the to-do list only by name (no notes or priority)
+    - allow for a way to reorder items in the list
