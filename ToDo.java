@@ -1,7 +1,13 @@
 import java.util.*;
 
 public class ToDo{
-    public static void printMenu(){
+        private static Scanner in = new Scanner(System.in);
+        private static int selection;
+        private static List todoList = null, completedList;   
+        private static boolean cont = true, highPriority;
+        private static String name, notes, temp;
+
+    private static void printMenu(){
         System.out.println("\nMenu");
         System.out.println("\t1. Create a list");
         System.out.println("\t2. See a list");
@@ -13,106 +19,104 @@ public class ToDo{
         System.out.print("Please select an item from above: ");
     }
 
+    private static boolean runOptions(){
+        try{
+            printMenu();
+            selection = in.nextInt();
+            in.nextLine();  //clears the input buffer of the enter
+            System.out.println();
+
+            switch(selection){
+                case 1: //create a list
+                    System.out.print("Please enter the name of the list: ");
+                    name = in.nextLine();
+                    System.out.print("Please enter any notes about this list: ");
+                    notes = in.nextLine();
+
+                    todoList = new List(name, notes);
+                    break;
+
+                case 2: //see a list
+                        //Still want to better format the elements in the list
+                    if (todoList == null) System.out.println("Must create a list first");
+                    else System.out.print(todoList.toString());
+                    break;
+
+                case 3: //add to a list
+                    if (todoList == null) System.out.println("Must create a list first");
+                    else{
+                        System.out.print("Enter the name of the element you wish to add: ");
+                        name = in.nextLine();
+                        System.out.print("Enter any notes about the element you wish to add: ");
+                        notes = in.nextLine();
+
+                        System.out.print("Is this a high priority element (Y/N): ");
+                        temp = in.nextLine();
+                        temp = temp.toUpperCase();
+                        switch(temp){
+                            case "Y":
+                                highPriority = true;
+                                break;
+                            case "N":
+                                highPriority = false;
+                                break;
+                            default:
+                                System.out.println("Incorrect input format, defaulted to not being a high priority element");
+                                highPriority = false;
+                        }
+                        todoList.addElement(name, notes, highPriority);
+                    }
+                    break;
+
+                case 4: //delete an element of a list
+                    if (todoList == null) System.out.println("Must create a list first");
+                    else{
+                        System.out.print("What is the name of the element you wish to delete: ");
+                        name = in.nextLine();
+                        todoList.deleteElement(name);
+                    }
+                    break;
+
+                case 5: //mark an element of a list as complete
+                    if (todoList == null) System.out.println("Must create a list first");
+                    else{
+                        Element complete;
+
+                        System.out.print("What is the name of the element you wish to mark as completed: ");
+                        name = in.nextLine();
+
+                        complete = todoList.completeElement(name);
+                        if (complete != null) completedList.addElement(complete.getName(), complete.getNotes(), complete.getHighPriority());
+                    }
+                    break;
+
+                case 6: //see the items from the list you have completed
+                    System.out.print(completedList.toString());
+                    break;
+
+                case 0: //stop
+                    System.out.println("Have a nice day!");
+                    cont = false;
+                    break;
+
+                default:    //none of the others were inputted
+                    System.out.println("Incorrect input format, please try again");
+            }
+        }
+        catch (Exception e){
+            System.out.println("\nAn error occurred, please try again");
+            in.nextLine();  //clears the input buffer that holds the error
+            cont = true;
+        }
+        return cont;
+    }
+
     public static void main(String[] args){
-        Scanner in = new Scanner(System.in);
-        int selection;
-        List todoList = null, completedList;   
-        boolean cont = true, highPriority;
-        String name, notes, temp;
-
-        completedList= new List("Completed", "This list contains all of the elements that have been marked as completed");
-
+        completedList= new List("Completed", "This list contains all of the elements that have been marked as completed");  //initialize completed list
         System.out.println("Welcome to this To-Do List");
 
         while (cont){
-            try{
-                printMenu();
-                selection = in.nextInt();
-                in.nextLine();  //clears the input buffer of the enter
-                System.out.println();
-
-                switch(selection){
-                    case 1: //create a list
-                        System.out.print("Please enter the name of the list: ");
-                        name = in.nextLine();
-                        System.out.print("Please enter any notes about this list: ");
-                        notes = in.nextLine();
-
-                        todoList = new List(name, notes);
-                        break;
-
-                    case 2: //see a list
-                    //Still want to better format the elements in the list
-                        if (todoList == null) System.out.println("Must create a list first");
-                        else System.out.print(todoList.toString());
-                        break;
-
-                    case 3: //add to a list
-                        if (todoList == null) System.out.println("Must create a list first");
-                        else{
-                            System.out.print("Enter the name of the element you wish to add: ");
-                            name = in.nextLine();
-                            System.out.print("Enter any notes about the element you wish to add: ");
-                            notes = in.nextLine();
-
-                            System.out.print("Is this a high priority element (Y/N): ");
-                            temp = in.nextLine();
-                            temp = temp.toUpperCase();
-                            switch(temp){
-                                case "Y":
-                                    highPriority = true;
-                                    break;
-                                case "N":
-                                    highPriority = false;
-                                    break;
-                                default:
-                                    System.out.println("Incorrect input format, defaulted to not being a high priority element");
-                                    highPriority = false;
-                            }
-                            todoList.addElement(name, notes, highPriority);
-                        }
-                        break;
-
-                    case 4: //delete an element of a list
-                        if (todoList == null) System.out.println("Must create a list first");
-                        else{
-                            System.out.print("What is the name of the element you wish to delete: ");
-                            name = in.nextLine();
-                            todoList.deleteElement(name);
-                        }
-                        break;
-
-                    case 5: //mark an element of a list as complete
-                        if (todoList == null) System.out.println("Must create a list first");
-                        else{
-                            Element complete;
-
-                            System.out.print("What is the name of the element you wish to mark as completed: ");
-                            name = in.nextLine();
-
-                            complete = todoList.completeElement(name);
-                            if (complete != null) completedList.addElement(complete.getName(), complete.getNotes(), complete.getHighPriority());
-                        }
-                        break;
-
-                    case 6: //see the items from the list you have completed
-                        System.out.print(completedList.toString());
-                        break;
-
-                    case 0: //stop
-                        System.out.println("Have a nice day!");
-                        cont = false;
-                        break;
-
-                    default:    //none of the others were inputted
-                        System.out.println("Incorrect input format, please try again");
-                }
-            }
-            catch (Exception e){
-                System.out.println("\nAn error occurred, please try again");
-                in.nextLine();  //clears the input buffer that holds the error
-                cont = true;
-            }
+            runOptions();
         }
         in.close();
     }
@@ -146,7 +150,7 @@ class List{
     public String getName(){
         return name;
     }
-    public String getNotes(){
+    public String getNotes(){   //****
         return notes;
     }
 
@@ -220,10 +224,10 @@ class Element{
     public String getName(){
         return name;
     }
-    public String getNotes(){
+    public String getNotes(){   //***
         return notes;
     }
-    public boolean getHighPriority(){
+    public boolean getHighPriority(){   //*** 
         return highPriority;
     }
 
