@@ -48,44 +48,51 @@ public class ToDo{
                         break;
 
                     case 3: //add to a list
-                        System.out.print("Enter the name of the element you wish to add: ");
-                        name = in.nextLine();
-                        System.out.print("Enter any notes about the element you wish to add: ");
-                        notes = in.nextLine();
+                        if (todoList == null) System.out.println("Must create a list first");
+                        else{
+                            System.out.print("Enter the name of the element you wish to add: ");
+                            name = in.nextLine();
+                            System.out.print("Enter any notes about the element you wish to add: ");
+                            notes = in.nextLine();
 
-                        System.out.print("Is this a high priority element (Y/N): ");
-                        temp = in.nextLine();
-                        temp = temp.toUpperCase();
-                        switch(temp){
-                            case "Y":
-                                highPriority = true;
-                                break;
-                            case "N":
-                                highPriority = false;
-                                break;
-                            default:
-                                System.out.println("Incorrect input format, defaulted to not being a high priority element");
-                                highPriority = false;
+                            System.out.print("Is this a high priority element (Y/N): ");
+                            temp = in.nextLine();
+                            temp = temp.toUpperCase();
+                            switch(temp){
+                                case "Y":
+                                    highPriority = true;
+                                    break;
+                                case "N":
+                                    highPriority = false;
+                                    break;
+                                default:
+                                    System.out.println("Incorrect input format, defaulted to not being a high priority element");
+                                    highPriority = false;
+                            }
+                            todoList.addElement(name, notes, highPriority);
                         }
-                        
-                        todoList.addElement(name, notes, highPriority);
                         break;
 
                     case 4: //delete an element of a list
-                        System.out.print("What is the name of the element you wish to delete: ");
-                        name = in.nextLine();
-                        todoList.deleteElement(name);
+                        if (todoList == null) System.out.println("Must create a list first");
+                        else{
+                            System.out.print("What is the name of the element you wish to delete: ");
+                            name = in.nextLine();
+                            todoList.deleteElement(name);
+                        }
                         break;
 
                     case 5: //mark an element of a list as complete
-                            //save any completed items into a completed list that  can be viewed later
-                        Element complete;
+                        if (todoList == null) System.out.println("Must create a list first");
+                        else{
+                            Element complete;
 
-                        System.out.print("What is the name of the element you wish to mark as completed: ");
-                        name = in.nextLine();
+                            System.out.print("What is the name of the element you wish to mark as completed: ");
+                            name = in.nextLine();
 
-                        complete = todoList.completeElement(name);
-                        completedList.addElement(complete.getName(), complete.getNotes(), complete.getHighPriority());
+                            complete = todoList.completeElement(name);
+                            if (complete != null) completedList.addElement(complete.getName(), complete.getNotes(), complete.getHighPriority());
+                        }
                         break;
 
                     case 6: //see the items from the list you have completed
@@ -166,7 +173,7 @@ class List{
                 return;
             }
         }
-        System.out.println("No element in this list exists with that name");
+        System.out.println("\nNo element in this list exists with that name");
     }
 
     //mark element as completed (delete it from the list), return the element to save it to a completed list
@@ -177,7 +184,7 @@ class List{
                 return el;
             }
         }
-        System.out.println("No element in this list exists with that name");
+        System.out.println("\nNo element in this list exists with that name");
         return null;
     }
 }
@@ -226,6 +233,6 @@ class Element{
         if (highPriority) priority = "!!!";
         else priority = "";
 
-        return "\t- " + name + "\t(" + notes + ")\t" + priority + "\n";
+        return "\t- " + name + "\t(" + notes + ") " + priority + "\n";
     }
 }
