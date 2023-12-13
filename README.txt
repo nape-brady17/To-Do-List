@@ -48,3 +48,4 @@ Functionalities:
         - if an element has a sequence of elements, then the element can have its own list with the same functionalities as the bigger to-do list
     - allow of printing the to-do list only by name (no notes or priority)
     - allow for a way to reorder items in the list
+    - allow for a time frame, a date when the task must be done by
