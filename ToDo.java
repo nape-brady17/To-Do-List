@@ -31,7 +31,7 @@ public class ToDo{
 
     //Prints the modification menu for the user
     private static void printModify(){
-        System.out.println("\nModification Menu");
+        System.out.println("Modification Menu");
         System.out.println("\t1. Modify the list name");
         System.out.println("\t2. Modify the lists notes");
         System.out.println("\t3. Modify an elements name");
