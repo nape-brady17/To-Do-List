@@ -172,6 +172,7 @@ public class ToDo{
                                 ele.setHighPriority(highPriority);  //Updates the priority of the element selected
                                 break;
                             default:
+                            System.out.println("Incorrect input format, please try again");
                         }
                     }
                     break;
