@@ -10,6 +10,7 @@ Program Basics:
         4. Delete an element of a list
         5. Mark an element of a list as complete
         6. See the items of the list you have completed
+        7.  Modify a list or element
     These allow the user to create, manage, and view their to-do list with simplicity. This program was written mainly for personal use as a way to keep track 
     of daily tasks that needed to be completed. The simplicity of the to-do list allows for ease of use and is time efficient.
 
@@ -38,9 +39,18 @@ Functionalities:
     6. See the items of the list you have completed
         This allows the user to view all of the items that they have completed. It is printed in the same format as above.
 
-***More functionalities will be added. Some of the functionalities I hope to add are:
-    - a way to edit both the list and the elements of a list
-        - change/edit the name and notes, as well as change the priority of the elements
+    7. Modify a list or element
+        This allows the user to modify the existing list, or any existing elements. After selecting the 7th option another menu will appear with the options:
+            1. Modify the list name
+            2. Modify the lists notes
+            3. Modify an elements name
+            4. Modify an elements notes
+            5. Modify an elements priority
+        These options modify what they say. It will ask the user to input the name of the element they wish to modify followed by instructions to type what they 
+        want to change that item to. Whenever something is modified the original item is not saved. This modification process deletes the original item and is 
+        replaced with the modification.
+
+***More functionalities may be added be added. Some of the functionalities I hope to add are:
     - a way to add multiple to-do lists
         - the main goal of this program was to be simple and easy to use, adding multiple to-do lists may make it harder to use
         - if this is done you would have to add deleting, editing, adding, and printing for the multiple lists

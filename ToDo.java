@@ -2,8 +2,9 @@ import java.util.*;
 
 public class ToDo{
         private static Scanner in = new Scanner(System.in);
-        private static int selection;
-        private static List todoList = null, completedList;   
+        private static int selection, tmp;
+        private static List todoList = null, completedList;
+        private static Element ele; 
         private static boolean cont = true, highPriority;
         private static String name, notes, temp;
 
@@ -15,8 +16,19 @@ public class ToDo{
         System.out.println("\t4. Delete an element of a list"); 
         System.out.println("\t5. Mark an element of a list as complete");
         System.out.println("\t6. See the items of the list you have completed");
+        System.out.println("\t7. Modify a list or element");
         System.out.println("\nIf you wish to stop press 0");
         System.out.print("Please select an item from above: ");
+    }
+
+    private static void printModify(){
+        System.out.println("\nModification Menu");
+        System.out.println("\t1. Modify the list name");
+        System.out.println("\t2. Modify the lists notes");
+        System.out.println("\t3. Modify an elements name");
+        System.out.println("\t4. Modify an elements notes");
+        System.out.println("\t5. Modify an elements priority");
+        System.out.print("\nPlease select an item from above: ");
     }
 
     private static boolean runOptions(){
@@ -80,18 +92,78 @@ public class ToDo{
                 case 5: //mark an element of a list as complete
                     if (todoList == null) System.out.println("Must create a list first");
                     else{
-                        Element complete;
-
                         System.out.print("What is the name of the element you wish to mark as completed: ");
                         name = in.nextLine();
 
-                        complete = todoList.completeElement(name);
-                        if (complete != null) completedList.addElement(complete.getName(), complete.getNotes(), complete.getHighPriority());
+                        ele = todoList.completeElement(name);
+                        if (ele != null) completedList.addElement(ele.getName(), ele.getNotes(), ele.getHighPriority());
                     }
                     break;
 
                 case 6: //see the items from the list you have completed
                     System.out.print(completedList.toString());
+                    break;
+
+                case 7: //modify a list or element
+                    if (todoList == null) System.out.println("Must create a list first");
+                    else{
+                        printModify();
+                        tmp = in.nextInt();
+                        in.nextLine();  //clears the input buffer of enter
+                        
+                        switch(tmp){
+                            case 1: //modify the lists name
+                                System.out.print("Enter the new name of the list: ");
+                                name = in.nextLine();
+                                todoList.setName(name);
+                                break;
+                            case 2: //modify the lists notes
+                                System.out.print("Enter the new note of the list: ");
+                                notes = in.nextLine();
+                                todoList.setNotes(notes);
+                                break;
+                            case 3: //modify an elements name
+                                System.out.print("Enter the name of the element you would like to modify: ");
+                                name = in.nextLine();
+                                ele = todoList.findElement(name);
+                                if (ele == null) break;
+                                System.out.print("Enter the new name for the element: ");
+                                name = in.nextLine();
+                                ele.setName(name);
+                                break;
+                            case 4: //modify an elements notes
+                                System.out.print("Enter the name of the element you would like to modify: ");
+                                name = in.nextLine();
+                                ele = todoList.findElement(name);
+                                if (ele == null) break;
+                                System.out.print("Enter the new note for the element: ");
+                                name = in.nextLine();
+                                ele.setNotes(name);
+                                break;
+                            case 5: //modify an elements priority
+                                System.out.print("Enter the name of the element you would like to modify: ");
+                                name = in.nextLine();
+                                ele = todoList.findElement(name);
+                                if (ele == null) break;
+                                System.out.print("Is this a high priority element (Y/N): ");
+                                temp = in.nextLine();
+                                temp = temp.toUpperCase();
+                                switch(temp){
+                                    case "Y":
+                                        highPriority = true;
+                                        break;
+                                    case "N":
+                                        highPriority = false;
+                                        break;
+                                    default:
+                                        System.out.println("Incorrect input format, defaulted to not being a high priority element");
+                                        highPriority = false;
+                                }
+                                ele.setHighPriority(highPriority);
+                                break;
+                            default:
+                        }
+                    }
                     break;
 
                 case 0: //stop
@@ -171,20 +243,26 @@ class List{
 
     //delete element from the list
     public void deleteElement(String name){
-        for (Element el : list){
-            if (el.getName().toUpperCase().equals(name.toUpperCase())){
-                list.remove(el);
-                return;
-            }
+        Element temp = findElement(name);
+        if (temp != null){
+            list.remove(temp);
         }
-        System.out.println("\nNo element in this list exists with that name");
     }
 
     //mark element as completed (delete it from the list), return the element to save it to a completed list
     public Element completeElement(String name){
+        Element temp = findElement(name);
+        if (name != null){
+            list.remove(temp);
+            return temp;
+        }
+        return null;
+    }
+
+    //search for an element in the list of elements
+    public Element findElement(String name){
         for (Element el : list){
             if (el.getName().toUpperCase().equals(name.toUpperCase())){
-                list.remove(el);
                 return el;
             }
         }
