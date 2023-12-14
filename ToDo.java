@@ -119,6 +119,7 @@ public class ToDo{
                         printModify();
                         tmp = in.nextInt();
                         in.nextLine();  //Clears the input buffer of enter
+                        System.out.println();
                         
                         switch(tmp){    //Switch based on user input
                             case 1: //Modify the lists name
