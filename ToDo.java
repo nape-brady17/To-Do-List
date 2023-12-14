@@ -78,9 +78,11 @@ public class ToDo{
                             case "Y":
                                 highPriority = true;
                                 break;
+
                             case "N":
                                 highPriority = false;
                                 break;
+
                             default:
                                 System.out.println("Incorrect input format, defaulted to not being a high priority element");
                                 highPriority = false;
@@ -127,33 +129,40 @@ public class ToDo{
                                 name = in.nextLine();
                                 todoList.setName(name); //Updates the name of the list
                                 break;
+
                             case 2: //Modify the lists notes
                                 System.out.print("Enter the new note of the list: ");
                                 notes = in.nextLine();
                                 todoList.setNotes(notes);   //Updates the notes of the list
                                 break;
+
                             case 3: //Modify an elements name
                                 System.out.print("Enter the name of the element you would like to modify: ");
                                 name = in.nextLine();
                                 ele = todoList.findElement(name);
+
                                 if (ele == null) break; //Element does not exist in the list
                                 System.out.print("Enter the new name for the element: ");
                                 name = in.nextLine();
                                 ele.setName(name);  //Updates the name of the element selected
                                 break;
+
                             case 4: //Modify an elements notes
                                 System.out.print("Enter the name of the element you would like to modify: ");
                                 name = in.nextLine();
                                 ele = todoList.findElement(name);
+
                                 if (ele == null) break; //Element does not exist in the list
                                 System.out.print("Enter the new note for the element: ");
                                 name = in.nextLine();
                                 ele.setNotes(name); //Updates the notes of the element selected
                                 break;
+
                             case 5: //Modify an elements priority
                                 System.out.print("Enter the name of the element you would like to modify: ");
                                 name = in.nextLine();
                                 ele = todoList.findElement(name);
+
                                 if (ele == null) break; //Element does not exist in the list
                                 System.out.print("Is this a high priority element (Y/N): ");
                                 temp = in.nextLine();
@@ -162,15 +171,18 @@ public class ToDo{
                                     case "Y":
                                         highPriority = true;
                                         break;
+
                                     case "N":
                                         highPriority = false;
                                         break;
+
                                     default:
                                         System.out.println("Incorrect input format, defaulted to not being a high priority element");
                                         highPriority = false;
                                 }
                                 ele.setHighPriority(highPriority);  //Updates the priority of the element selected
                                 break;
+
                             default:
                             System.out.println("Incorrect input format, please try again");
                         }
@@ -188,6 +200,8 @@ public class ToDo{
         }
         catch (Exception e){
             System.out.println("\nAn error occurred, please try again");
+            //May want to change this to only catch the input buffer if it is a certain kind of error
+                //Check the error kind and do a if (error) in.nextLine();   //clears the input buffer that holds the error
             in.nextLine();  //Clears the input buffer that holds the error
         }
         return cont;    //Cont will be true unless option 0 is selected
