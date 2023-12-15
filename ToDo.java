@@ -126,7 +126,6 @@ public class ToDo{
                     else{
                         printModify();
                         tmp = in.nextInt();
-                        in.nextLine();  //Clears the input buffer of enter
                         System.out.println();
 
                         if (todoList.listEmpty()){
@@ -137,8 +136,10 @@ public class ToDo{
                         if (tmp == 3 || tmp == 4 || tmp == 5){
                             todoList.elementsMenu();
                             System.out.print("\nEnter the number of the element you wish to modify: ");
-                            from = in.nextInt();
+                            from = in.nextInt() - 1;
                         }
+
+                        in.nextLine();  //Clears the input buffer of enter
                         
                         switch(tmp){    //Switch based on user input
                             case 1: //Modify the lists name
