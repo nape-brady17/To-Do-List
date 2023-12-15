@@ -113,8 +113,7 @@ public class ToDo{
                         tmp = in.nextInt() - 1;
                         ele = todoList.getElement(tmp);
 
-                        todoList.deleteElement(ele);   //Deletes the Element from the list
-                        completedList.addElement(ele.getName(), ele.getNotes(), ele.getHighPriority());    //Adds the element to the Completed list
+                        todoList.completeElement(ele);
                     }
                     break;
 
@@ -254,7 +253,7 @@ class List{
     private ArrayList<Element> list;
 
     //Constructors for the List class
-    public List(){
+    public List(){ 
         name = notes = null;
         list = new ArrayList<>();
     }
@@ -311,38 +310,15 @@ class List{
         list.add(idx,  ele);
     }
 
-    //Deletes an element from the list
-    public void deleteElement(String name){
-        Element temp = findElement(name);
-        if (temp != null){  //If the Element exists, remove it
-            list.remove(temp);
-        }
-    }
-
     //Deletes an element from the list given the element
     public void deleteElement(Element ele){
         list.remove(ele);
     }
 
     //Marks an element as completed (deletes it from the list), return the element to save it to a completed list
-    public Element completeElement(String name){
-        Element temp = findElement(name);
-        if (name != null){  //If the Element exists, remove and return it
-            list.remove(temp);
-            return temp;
-        }
-        return null;
-    }
-
-    //Searches for an element in the list of elements
-    public Element findElement(String name){
-        for (Element el : list){
-            if (el.getName().toUpperCase().equals(name.toUpperCase())){ //If the Element exists, return it
-                return el;
-            }
-        }
-        System.out.println("\nNo element in this list exists with that name");
-        return null;
+    public void completeElement(Element ele){
+        deleteElement(ele);   //Deletes the Element from the list
+        list.add(ele);
     }
 
     //Prints the list of elements to select one to reorder
