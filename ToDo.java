@@ -94,6 +94,7 @@ public class ToDo{
 
                 case 4: //Delete an element of a list
                     if (todoList == null) System.out.println("Must create a list first");
+                    else if (todoList.listEmpty()) System.out.println("Must have elements in the list first");
                     else{
                         todoList.elementsMenu();
                         System.out.print("\nEnter the number of the element you wish to delete: ");
@@ -105,6 +106,7 @@ public class ToDo{
 
                 case 5: //Mark an element of a list as complete
                     if (todoList == null) System.out.println("Must create a list first");
+                    else if (todoList.listEmpty()) System.out.println("Must have elements in the list first");
                     else{
                         todoList.elementsMenu();
                         System.out.print("\nEnter the number of the element you wish to mark as completed: ");
@@ -127,6 +129,11 @@ public class ToDo{
                         tmp = in.nextInt();
                         in.nextLine();  //Clears the input buffer of enter
                         System.out.println();
+
+                        if (todoList.listEmpty()){
+                            System.out.println("Must have elements in the list first");
+                            break;
+                        }
 
                         if (tmp == 3 || tmp == 4 || tmp == 5){
                             todoList.elementsMenu();
@@ -196,6 +203,7 @@ public class ToDo{
 
                 case 8: //Reorder an element of the list
                     if (todoList == null) System.out.println("Must create a list first");
+                    else if (todoList.listEmpty()) System.out.println("Must have elements in the list first");
                     else{
                         todoList.elementsMenu();
                         System.out.print("\nPlease enter the number of the element you wish to reorder: ");
@@ -256,15 +264,17 @@ class List{
         list = new ArrayList<>();
     }
 
-    //Setters for each of the class variables
+    //Sets the name of the list
     public void setName(String name){
         this.name = name;
     }
+
+    //Sets the notes of the list
     public void setNotes(String notes){
         this.notes = notes;
     }
 
-    //Getters for each of the class variables
+    //Returns the name of the list
     public String getName(){
         return name;
     }
@@ -341,6 +351,11 @@ class List{
             System.out.print("\t" + (i + 1) + ". " + list.get(i).getName() + "\n");
         }
     }
+
+    //Returns if the list has anything in it
+    public boolean listEmpty(){
+        return list.size() == 0;
+    }
 }
 
 class Element{
@@ -360,24 +375,32 @@ class Element{
         this.highPriority = highPriority;
     }
 
-    //Setters for each of the class variables
+    //Sets the name of the element
     public void setName(String name){
         this.name = name;
     }
+
+    //Sets the notes of the element
     public void setNotes(String notes){
         this.notes = notes;
     }
+
+    //Sets the priority of the element
     public void setHighPriority(boolean highPriority){
         this.highPriority = highPriority;
     }
 
-    //Getters for each of the class variables
+    //Returns the name of the element
     public String getName(){
         return name;
     }
+
+    //Returns the notes of the element
     public String getNotes(){
         return notes;
     }
+
+    //Returns the priority of the element
     public boolean getHighPriority(){
         return highPriority;
     }
