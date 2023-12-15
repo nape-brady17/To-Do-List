@@ -194,7 +194,7 @@ public class ToDo{
                     if (todoList == null) System.out.println("Must create a list first");
                     else{
                         todoList.reorderMenu();
-                        System.out.print("Please enter the number of the element you wish to reorder: ");
+                        System.out.print("\nPlease enter the number of the element you wish to reorder: ");
                         from = in.nextInt() - 1; //Index of the element the user wishes to remove
                         System.out.print("Enter the place you would like to insert this item: ");
                         to = in.nextInt() - 1;  //Index of the place to user wishes to move the element
@@ -218,8 +218,6 @@ public class ToDo{
         }
         catch (Exception e){
             System.out.println("\nAn error occurred, please try again");
-            //May want to change this to only catch the input buffer if it is a certain kind of error
-                //Check the error kind and do a if (error) in.nextLine();   //clears the input buffer that holds the error
             in.nextLine();  //Clears the input buffer that holds the error
         }
         return cont;    //Cont will be true unless option 0 is selected
@@ -271,7 +269,7 @@ class List{
             return list.get(idx);
         }
         catch (Exception e){
-            System.out.println("\nAn error occurred, no element exists at this index, please try again");
+            System.out.println("\nAn error occurred, please try again");
             return null;
         }
         
@@ -335,7 +333,7 @@ class List{
     //Prints the list of elements to select one to reorder
     public void reorderMenu(){
         for (int i = 0; i < list.size(); i++){
-            System.out.print(i + 1 + ": " + list.get(i).getName());
+            System.out.print("\t" + (i + 1) + ". " + list.get(i).getName() + "\n");
         }
     }
 }
