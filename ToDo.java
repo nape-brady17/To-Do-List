@@ -9,7 +9,7 @@ import java.util.*;
 public class ToDo{
     //Class variables
     private static Scanner in = new Scanner(System.in);
-    private static int selection, tmp;
+    private static int selection, tmp, to, from;
     private static List todoList = null, completedList;
     private static Element ele; 
     private static boolean cont = true, highPriority;
@@ -94,20 +94,24 @@ public class ToDo{
                 case 4: //Delete an element of a list
                     if (todoList == null) System.out.println("Must create a list first");
                     else{
-                        System.out.print("What is the name of the element you wish to delete: ");
-                        name = in.nextLine();
-                        todoList.deleteElement(name);   //Deletes Element from the list
+                        todoList.elementsMenu();
+                        System.out.print("\nEnter the number of the element you wish to delete: ");
+                        tmp = in.nextInt() - 1;
+                        ele = todoList.getElement(tmp);
+                        todoList.deleteElement(ele);   //Deletes Element from the list
                     }
                     break;
 
                 case 5: //Mark an element of a list as complete
                     if (todoList == null) System.out.println("Must create a list first");
                     else{
-                        System.out.print("What is the name of the element you wish to mark as completed: ");
-                        name = in.nextLine();
+                        todoList.elementsMenu();
+                        System.out.print("\nEnter the number of the element you wish to mark as completed: ");
+                        tmp = in.nextInt() - 1;
+                        ele = todoList.getElement(tmp);
 
-                        ele = todoList.completeElement(name);   //Removes the Element from the list
-                        if (ele != null) completedList.addElement(ele.getName(), ele.getNotes(), ele.getHighPriority());    //Adds the element to the Completed list
+                        todoList.deleteElement(ele);   //Deletes the Element from the list
+                        completedList.addElement(ele.getName(), ele.getNotes(), ele.getHighPriority());    //Adds the element to the Completed list
                     }
                     break;
 
@@ -122,6 +126,12 @@ public class ToDo{
                         tmp = in.nextInt();
                         in.nextLine();  //Clears the input buffer of enter
                         System.out.println();
+
+                        if (tmp == 3 || tmp == 4 || tmp == 5){
+                            todoList.elementsMenu();
+                            System.out.print("\nEnter the number of the element you wish to modify: ");
+                            from = in.nextInt();
+                        }
                         
                         switch(tmp){    //Switch based on user input
                             case 1: //Modify the lists name
@@ -137,33 +147,27 @@ public class ToDo{
                                 break;
 
                             case 3: //Modify an elements name
-                                System.out.print("Enter the name of the element you would like to modify: ");
-                                name = in.nextLine();
-                                ele = todoList.findElement(name);
-
+                                ele = todoList.getElement(from);
                                 if (ele == null) break; //Element does not exist in the list
+
                                 System.out.print("Enter the new name for the element: ");
                                 name = in.nextLine();
                                 ele.setName(name);  //Updates the name of the element selected
                                 break;
 
                             case 4: //Modify an elements notes
-                                System.out.print("Enter the name of the element you would like to modify: ");
-                                name = in.nextLine();
-                                ele = todoList.findElement(name);
-
+                                ele = todoList.getElement(from);
                                 if (ele == null) break; //Element does not exist in the list
+
                                 System.out.print("Enter the new note for the element: ");
                                 name = in.nextLine();
                                 ele.setNotes(name); //Updates the notes of the element selected
                                 break;
 
                             case 5: //Modify an elements priority
-                                System.out.print("Enter the name of the element you would like to modify: ");
-                                name = in.nextLine();
-                                ele = todoList.findElement(name);
-
+                                ele = todoList.getElement(from);
                                 if (ele == null) break; //Element does not exist in the list
+
                                 System.out.print("Is this a high priority element (Y/N): ");
                                 temp = in.nextLine();
                                 temp = temp.toUpperCase();
@@ -186,6 +190,23 @@ public class ToDo{
                             default:
                             System.out.println("Incorrect input format, please try again");
                         }
+                    }
+                    break;
+
+                    case 8: //Reorder an element of the list
+                    if (todoList == null) System.out.println("Must create a list first");
+                    else{
+                        todoList.elementsMenu();
+                        System.out.print("\nPlease enter the number of the element you wish to reorder: ");
+                        from = in.nextInt() - 1; //Index of the element the user wishes to remove
+                        System.out.print("Enter the place you would like to insert this item: ");
+                        to = in.nextInt() - 1;  //Index of the place to user wishes to move the element
+
+                        ele = todoList.getElement(from);    //The element to be moved
+                        if (ele == null) break;
+
+                        todoList.deleteElement(ele);    //Deletes the element from the list
+                        todoList.addElement(ele, to);   //Adds the element to the correct location given by the user
                     }
                     break;
 
@@ -248,6 +269,15 @@ class List{
     public String getName(){
         return name;
     }
+    public Element getElement(int idx){
+        try{
+            return list.get(idx);
+        }
+        catch (Exception e){
+            System.out.println("\nAn error occurred, please try again");
+            return null;
+        } 
+    }
 
     //toString override for the List class
     @Override
@@ -259,18 +289,28 @@ class List{
         return name + ":\t(" + notes + ")\n" + ele;
     }
 
-    //Adds an element to the list
+    //Adds an element to the list given name, notes, and priority
     public void addElement(String name, String notes, boolean highPriority){
         Element temp = new Element(name, notes, highPriority);  //Creates a new Element
         list.add(temp); //Adds it to the list
     }
 
-    //Deletes an element from the list
+    //Adds an element to a specific index to the list
+    public void addElement(Element ele, int idx){
+        list.add(idx,  ele);
+    }
+
+    //Deletes an element from the list given the name
     public void deleteElement(String name){
         Element temp = findElement(name);
         if (temp != null){  //If the Element exists, remove it
             list.remove(temp);
         }
+    }
+
+    //Deletes an element from the list given the element
+    public void deleteElement(Element ele){
+        list.remove(ele);
     }
 
     //Marks an element as completed (deletes it from the list), return the element to save it to a completed list
@@ -292,6 +332,13 @@ class List{
         }
         System.out.println("\nNo element in this list exists with that name");
         return null;
+    }
+
+    //Prints the list of elements to select one to reorder
+    public void elementsMenu(){
+        for (int i = 0; i < list.size(); i++){
+            System.out.print("\t" + (i + 1) + ". " + list.get(i).getName() + "\n");
+        }
     }
 }
 
