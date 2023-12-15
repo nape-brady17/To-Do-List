@@ -9,7 +9,7 @@ import java.util.*;
 public class ToDo{
     //Class variables
     private static Scanner in = new Scanner(System.in);
-    private static int selection, tmp;
+    private static int selection, tmp, to, from;
     private static List todoList = null, completedList;
     private static Element ele; 
     private static boolean cont = true, highPriority;
@@ -25,6 +25,7 @@ public class ToDo{
         System.out.println("\t5. Mark an element of a list as complete");
         System.out.println("\t6. See the items of the list you have completed");
         System.out.println("\t7. Modify a list or element");
+        System.out.println("\t8. Reorder an element of the list");
         System.out.println("\nIf you wish to stop press 0");
         System.out.print("Please select an item from above: ");
     }
@@ -189,6 +190,23 @@ public class ToDo{
                     }
                     break;
 
+                case 8: //Reorder an element of the list
+                    if (todoList == null) System.out.println("Must create a list first");
+                    else{
+                        todoList.reorderMenu();
+                        System.out.print("Please enter the number of the element you wish to reorder: ");
+                        from = in.nextInt() - 1; //Index of the element the user wishes to remove
+                        System.out.print("Enter the place you would like to insert this item: ");
+                        to = in.nextInt() - 1;  //Index of the place to user wishes to move the element
+
+                        ele = todoList.getElement(from);    //The element to be moved
+                        if (ele == null) break;
+
+                        todoList.deleteElement(ele);    //Deletes the element from the list
+                        todoList.addElement(ele, to);   //Adds the element to the correct location given by the user
+                    }
+                    break;
+
                 case 0: //Exit program
                     System.out.println("Have a nice day!");
                     cont = false;   //Stop continuing
@@ -248,6 +266,16 @@ class List{
     public String getName(){
         return name;
     }
+    public Element getElement(int idx){
+        try{
+            return list.get(idx);
+        }
+        catch (Exception e){
+            System.out.println("\nAn error occurred, no element exists at this index, please try again");
+            return null;
+        }
+        
+    }
 
     //toString override for the List class
     @Override
@@ -265,12 +293,22 @@ class List{
         list.add(temp); //Adds it to the list
     }
 
-    //Deletes an element from the list
+    //Adds an element to a specific index to the list
+    public void addElement(Element ele, int idx){
+        list.add(idx,  ele);
+    }
+
+    //Deletes an element from the list given the name
     public void deleteElement(String name){
         Element temp = findElement(name);
         if (temp != null){  //If the Element exists, remove it
             list.remove(temp);
         }
+    }
+
+    //Deletes an element from the list given the element
+    public void deleteElement(Element ele){
+        list.remove(ele);
     }
 
     //Marks an element as completed (deletes it from the list), return the element to save it to a completed list
@@ -292,6 +330,13 @@ class List{
         }
         System.out.println("\nNo element in this list exists with that name");
         return null;
+    }
+
+    //Prints the list of elements to select one to reorder
+    public void reorderMenu(){
+        for (int i = 0; i < list.size(); i++){
+            System.out.print(i + 1 + ": " + list.get(i).getName());
+        }
     }
 }
 
