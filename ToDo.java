@@ -25,6 +25,7 @@ public class ToDo{
         System.out.println("\t5. Mark an element of a list as complete");
         System.out.println("\t6. See the items of the list you have completed");
         System.out.println("\t7. Modify a list or element");
+        System.out.println("\t8. Reorder an element of the list");
         System.out.println("\nIf you wish to stop press 0");
         System.out.print("Please select an item from above: ");
     }
@@ -193,7 +194,7 @@ public class ToDo{
                     }
                     break;
 
-                    case 8: //Reorder an element of the list
+                case 8: //Reorder an element of the list
                     if (todoList == null) System.out.println("Must create a list first");
                     else{
                         todoList.elementsMenu();
@@ -221,8 +222,6 @@ public class ToDo{
         }
         catch (Exception e){
             System.out.println("\nAn error occurred, please try again");
-            //May want to change this to only catch the input buffer if it is a certain kind of error
-                //Check the error kind and do a if (error) in.nextLine();   //clears the input buffer that holds the error
             in.nextLine();  //Clears the input buffer that holds the error
         }
         return cont;    //Cont will be true unless option 0 is selected
@@ -269,6 +268,8 @@ class List{
     public String getName(){
         return name;
     }
+
+    //Returns the element at the given index
     public Element getElement(int idx){
         try{
             return list.get(idx);
@@ -276,7 +277,7 @@ class List{
         catch (Exception e){
             System.out.println("\nAn error occurred, please try again");
             return null;
-        } 
+        }
     }
 
     //toString override for the List class
@@ -300,7 +301,7 @@ class List{
         list.add(idx,  ele);
     }
 
-    //Deletes an element from the list given the name
+    //Deletes an element from the list
     public void deleteElement(String name){
         Element temp = findElement(name);
         if (temp != null){  //If the Element exists, remove it
