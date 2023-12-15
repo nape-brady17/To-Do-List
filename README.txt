@@ -1,4 +1,4 @@
-********ADD REORDERING FUNCTIONALITIES***********
+******ADD REORDERING FUNCTIONALITIES********
 
 
 This program was written by: Brady Napier
