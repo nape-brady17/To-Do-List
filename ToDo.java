@@ -114,6 +114,8 @@ public class ToDo{
                         ele = todoList.getElement(tmp);
 
                         todoList.completeElement(ele);
+
+                        completedList.addElement(ele);
                     }
                     break;
 
@@ -311,15 +313,20 @@ class List{
         list.add(idx,  ele);
     }
 
+    //Adds an element to a list given the element
+    public void addElement(Element ele){
+        list.add(ele);
+    }
+
     //Deletes an element from the list given the element
     public void deleteElement(Element ele){
         list.remove(ele);
     }
 
     //Marks an element as completed (deletes it from the list), return the element to save it to a completed list
-    public void completeElement(Element ele){
+    public Element completeElement(Element ele){
         deleteElement(ele);   //Deletes the Element from the list
-        list.add(ele);
+        return ele;
     }
 
     //Prints the list of elements to select one to reorder
