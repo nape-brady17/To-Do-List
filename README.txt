@@ -1,6 +1,3 @@
-******ADD REORDERING FUNCTIONALITIES********
-
-
 This program was written by: Brady Napier
 
 Program Basics:
@@ -14,6 +11,7 @@ Program Basics:
         5. Mark an element of a list as complete
         6. See the items of the list you have completed
         7. Modify a list or element
+        8. Reorder an element of the list
     These allow the user to create, manage, edit, and view their to-do list with simplicity. This program was written mainly for personal use as a way to keep 
     track of daily tasks that they wish to complete. The simplicity of the to-do list allows for ease of use and is time efficient.
 
@@ -58,13 +56,19 @@ Functionalities:
         These options modify what they say. It will ask the user to input the name of the element they wish to modify followed by instructions to type what they 
         want to change that item to. Whenever something is modified the original item is not saved. This modification process deletes the original item and is 
         replaced with the modification.
+    8. Reorder an element of the list
+        This allows the user to reorder the elements in the current list. After selecting this option all of the elements in the list will appear. The user should
+        select the element they wish to move, then enter the place in which they wish to move that element. This process does not delete any element of the list 
+        and will simply move the elements around. For example if a list has 5 elements and element 5 is selected to move to be element 1, the element would be 
+        moved there and all other elements will move down one place.
 
-***More functionalities may be added be added. Some of the functionalities I hope to add are:
+***More functionalities may be added be added later. Some of these functionalities are:
     - a way to add multiple to-do lists
-        - the main goal of this program was to be simple and easy to use, adding multiple to-do lists may make it harder to use
-        - if this is done you would have to add deleting, editing, adding, and printing for the multiple lists
+        - if this is done you would also have to add deleting, editing, adding, and printing for the multiple lists
     - allow an element to have its own list
         - if an element has a sequence of elements, then the element can have its own list with the same functionalities as the bigger to-do list
     - allow of printing the to-do list only by name (no notes or priority)
-    - allow for a way to reorder items in the list
+    - allow printing of only high priority elements
     - allow for a time frame, a date when the task must be done by
+Some of these functionalities will take away from the simplicity of the to-do list. This to-do list was meant to be very simple and easy to use, adding too many 
+functionalities will take away from that.

@@ -1,7 +1,7 @@
 /*
 *              This program was written by: Brady Napier
-* This is a small command line program that allows users to create a single to-do list
-* The program was written as a way to create, manage, edit, and view a to-do list
+* This is a small command line program that allows users to interact with a to-do list
+* The program was written as a way to create, manage, edit, and view a single to-do list
 */
 
 import java.util.*;
